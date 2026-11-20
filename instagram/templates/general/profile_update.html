@@ -1,0 +1,23 @@
+{% extends "general/layout.html" %}
+
+{% block head_title %}Editar perfil · InstaConquer{% endblock %}
+
+{% block page_content %}
+<a class="back-link" href="{% url 'profile_detail' profile.pk %}"><span aria-hidden="true">←</span> Mi perfil</a>
+
+<section class="form-layout" aria-labelledby="edit-title">
+  <header class="page-heading">
+    <h1 id="edit-title">Editar perfil</h1>
+    {% include '_includes/_avatar.html' with person=profile.user avatar_class='avatar-large' only %}
+  </header>
+
+  <form method="post" enctype="multipart/form-data" class="form-panel">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="field">{{ form.bio.as_field_group }}</div>
+    <div class="field">{{ form.birth_date.as_field_group }}</div>
+    <div class="field">{{ form.profile_picture.as_field_group }}</div>
+    <button class="button" type="submit">Guardar cambios</button>
+  </form>
+</section>
+{% endblock %}

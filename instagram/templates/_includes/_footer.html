@@ -1,0 +1,12 @@
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <span>InstaConquer</span>
+    <nav aria-label="Información">
+      <a href="{% url 'contact' %}">Contacto</a>
+      <a href="{% url 'legal' %}">Aviso legal</a>
+      {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}">Cerrar sesión</a>
+      {% endif %}
+    </nav>
+  </div>
+</footer>

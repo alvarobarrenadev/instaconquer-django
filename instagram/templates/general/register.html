@@ -1,0 +1,18 @@
+{% extends "general/layout.html" %}
+
+{% block head_title %}Registro · InstaConquer{% endblock %}
+
+{% block page_content %}
+<section class="form-layout" aria-labelledby="register-title">
+  <header class="page-heading">
+    <h1 id="register-title">Crear una cuenta</h1>
+    <p>¿Ya tienes cuenta? <a class="text-link" href="{% url 'login' %}">Inicia sesión</a></p>
+  </header>
+
+  <form method="post" class="form-panel">
+    {% csrf_token %}
+    {% include '_includes/_fields.html' %}
+    <button class="button" type="submit">Registrarse</button>
+  </form>
+</section>
+{% endblock %}

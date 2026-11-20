@@ -1,0 +1,21 @@
+<article class="post-card">
+  <a class="post-media" href="{% url 'post_detail' post.pk %}" aria-label="Ver publicación de {{ post.user.username }} del {{ post.created_at|date:'j M Y, H:i' }}">
+    {% if post.image %}
+      <img src="{{ post.image.url }}" alt="" {% if priority %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+    {% endif %}
+  </a>
+
+  {% include '_includes/posts/_byline.html' %}
+
+  {% if post.caption %}
+    <p class="post-caption">{{ post.caption }}</p>
+  {% endif %}
+
+  <div class="post-actions">
+    {% include '_includes/posts/_like.html' %}
+    <a class="post-action" href="{% url 'post_detail' post.pk %}#comentarios">
+      {% with count=post.comments.count %}{{ count }} comentario{{ count|pluralize }}{% endwith %}
+    </a>
+    <a class="post-open" href="{% url 'post_detail' post.pk %}" aria-label="Ver publicación de {{ post.user.username }} del {{ post.created_at|date:'j M Y, H:i' }}"><span aria-hidden="true">↗</span></a>
+  </div>
+</article>

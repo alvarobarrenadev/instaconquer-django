@@ -1,0 +1,34 @@
+{% extends "general/layout.html" %}
+
+{% block head_title %}Perfiles · InstaConquer{% endblock %}
+
+{% block page_content %}
+<header class="page-heading">
+  <h1>Perfiles</h1>
+  <p>Encuentra a quién seguir.</p>
+</header>
+
+{% if profiles %}
+  <ul class="people-list">
+    {% for profile in profiles %}
+      <li class="people-row">
+        {% include '_includes/_avatar.html' with person=profile.user avatar_class='avatar-medium' only %}
+        <div class="people-identity">
+          <h2><a href="{% url 'profile_detail' profile.pk %}">{{ profile.user.first_name|default:profile.user.username }}</a></h2>
+          {% if profile.user.first_name %}<p class="muted">{{ profile.user.username }}</p>{% endif %}
+          {% if profile.bio %}<p class="person-bio">{{ profile.bio|truncatewords:24 }}</p>{% endif %}
+        </div>
+        {% with followers=profile.following_set.count %}
+          <p class="people-stat">{{ followers }} seguidor{{ followers|pluralize:"es" }}</p>
+        {% endwith %}
+        <a class="people-open" href="{% url 'profile_detail' profile.pk %}" aria-label="Ver perfil de {{ profile.user.username }}"><span aria-hidden="true">↗</span></a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <div class="empty-state">
+    <h2>Aún no hay otros perfiles</h2>
+    <a class="text-link" href="{% url 'home' %}">Volver a Inicio</a>
+  </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+<div class="post-byline">
+  {% if post.user.profile %}
+    <a class="byline-person" href="{% url 'profile_detail' post.user.profile.pk %}">
+      {% include '_includes/_avatar.html' with person=post.user only %}
+      <span>{{ post.user.first_name|default:post.user.username }}</span>
+    </a>
+  {% else %}
+    <div class="byline-person">
+      {% include '_includes/_avatar.html' with person=post.user only %}
+      <span>{{ post.user.first_name|default:post.user.username }}</span>
+    </div>
+  {% endif %}
+  <time datetime="{{ post.created_at|date:'c' }}">{{ post.created_at|date:"j M Y" }}</time>
+</div>

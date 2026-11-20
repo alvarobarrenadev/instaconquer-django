@@ -1,0 +1,7 @@
+<span class="avatar{% if avatar_class %} {{ avatar_class }}{% endif %}" aria-hidden="true">
+  {% if person.profile.profile_picture %}
+    <img src="{{ person.profile.profile_picture.url }}" alt="" loading="lazy">
+  {% else %}
+    {{ person.first_name|default:person.username|slice:":1"|upper }}
+  {% endif %}
+</span>

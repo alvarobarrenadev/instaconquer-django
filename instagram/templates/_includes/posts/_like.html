@@ -1,0 +1,16 @@
+{% if request.user.is_authenticated %}
+  <form action="{% url 'post_like' post.pk %}" method="post" class="like-form" data-like-url="{% url 'post_like_ajax' post.pk %}">
+    {% csrf_token %}
+    <button type="submit" class="post-action like-button" aria-label="Me gusta" aria-pressed="{% if request.user in post.likes.all %}true{% else %}false{% endif %}" aria-describedby="likes-{{ post.pk }}">
+      <span class="heart-empty" aria-hidden="true">♡</span>
+      <span class="heart-filled" aria-hidden="true">♥</span>
+      <span id="likes-{{ post.pk }}" class="like-count">{{ post.likes.count }}</span>
+    </button>
+    <span class="like-status visually-hidden" role="status"></span>
+  </form>
+{% else %}
+  <span class="post-action">
+    <span class="heart-empty" aria-hidden="true">♡</span>
+    {{ post.likes.count }} <span class="visually-hidden">Me gusta</span>
+  </span>
+{% endif %}

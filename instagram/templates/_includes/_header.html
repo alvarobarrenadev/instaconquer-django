@@ -1,0 +1,32 @@
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="wordmark" href="{% url 'home' %}">
+      <span class="brand-mark" aria-hidden="true"></span>
+      InstaConquer
+    </a>
+
+    {% with route=request.resolver_match.url_name %}
+      <nav class="site-nav" aria-label="Navegación principal">
+        <a href="{% url 'home' %}" {% if route == 'home' %}aria-current="page"{% endif %}>Inicio</a>
+        <a href="{% url 'profile_list' %}" {% if route == 'profile_list' %}aria-current="page"{% endif %}>Perfiles</a>
+      </nav>
+
+      <div class="header-actions">
+        {% if request.user.is_authenticated %}
+          <a class="button" href="{% url 'post_create' %}" {% if route == 'post_create' %}aria-current="page"{% endif %}>
+            <span aria-hidden="true">+</span> Publicar
+          </a>
+          {% if request.user.profile %}
+            {% url 'profile_detail' request.user.profile.pk as own_profile_url %}
+            <a class="account-link" href="{{ own_profile_url }}" aria-label="Mi perfil" {% if request.path == own_profile_url %}aria-current="page"{% endif %}>
+              {% include '_includes/_avatar.html' with person=request.user only %}
+            </a>
+          {% endif %}
+        {% else %}
+          <a class="login-link" href="{% url 'login' %}" {% if route == 'login' %}aria-current="page"{% endif %}>Iniciar sesión</a>
+          <a class="button" href="{% url 'register' %}" {% if route == 'register' %}aria-current="page"{% endif %}>Registrarse</a>
+        {% endif %}
+      </div>
+    {% endwith %}
+  </div>
+</header>
